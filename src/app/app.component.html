@@ -1,0 +1,71 @@
+
+<!DOCTYPE html><html class=''>
+<head>
+<style class="cp-pen-styles"></style></head>
+<body>
+<div id="frame">
+	<div id="sidepanel">
+		<div id="profile">
+			<div class="wrap">								
+				<img id="profile-img" [src]="hirerLogo" class="online" alt="" />
+				<p>{{ hirerName }}</p>
+				<div class="hamburger" (click)="toggleExpand()" [class.change]="expanded">
+					<div class="bar1"></div>
+					<div class="bar2"></div>
+					<div class="bar3"></div>
+				</div>
+			</div>
+		</div>
+		<div id="search">
+			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+			<input type="text" placeholder="Procurar contatos..." />
+		</div>
+		<div id="contacts">
+			<ul>
+				<li *ngFor="let contact of contacts; let i = index" style="border-bottom: 1px solid lightblue;" class="contact" [class.active]="i === selectedIndex" (click)="selectContactById(contact.id)">
+					<div class="wrap">
+						<span class="contact-status" [class.online]="contact.apt2ActiveMessage"></span>
+						<p attr.data-letters="{{ contact | getContactName | getContactNameInitials }}" class="name"><img style="width: 20px; margin: 0px; transform: translate(10px, 0px);" [src]="contact.channel === 'Telegram' ? '../assets/img/icon/telegram-512x512.png' : '../assets/img/icon/whatsapp-512x512.png'" alt=""><div class="full-name">{{ contact | getContactName }}</div></p>
+						<div class="meta">							
+							<p class="preview">{{ contact.lastMessage }}</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div id="bottom-bar">
+			<button id="addcontact"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span>Sair</span></button>
+			<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Configurações</span></button>
+		</div>
+	</div>
+	<div class="content">
+		<div class="contact-profile">
+			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+			<p>{{ selectedContact | getContactName }}</p>
+			<div class="social-media">
+				<i class="fa fa-facebook" aria-hidden="true"></i>
+				<i class="fa fa-twitter" aria-hidden="true"></i>
+				 <i class="fa fa-instagram" aria-hidden="true"></i>
+			</div>
+		</div>
+		<div class="messages">
+			<ul>
+				<ng-container *ngFor="let m of message.messages">
+					<li [class.sent]="m.from === 'admin'" [class.replies]="m.from !== 'admin'">
+						<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+						<p>{{ m.content }}</p>
+					</li>				
+				</ng-container>
+			</ul>
+		</div>
+		<div class="message-input">
+			<div class="wrap">
+			<input type="text" placeholder="Escreva sua mensagem..." />
+			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
