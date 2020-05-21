@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'mflow-chat';
 
+  menuOpen = true;
+
   selectedIndex: number = -1;
   selectedContact: any = {};
 
