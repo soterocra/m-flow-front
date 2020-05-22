@@ -10,7 +10,12 @@ export class NameTransformPipe implements PipeTransform {
       if (contact.userName != "") return contact.userName;
       return contact.userId;
     }
-    return name();
+
+    let appropriateName: string = name();
+    // if (appropriateName.length > 13)
+    //   appropriateName = appropriateName.substring(0, 9).trim() + '...';
+    
+    return appropriateName;
   }
 
 }

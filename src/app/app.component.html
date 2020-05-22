@@ -1,10 +1,10 @@
 
 <!DOCTYPE html><html class=''>
 <head>
-<style class="cp-pen-styles"></style></head>
+</head>
 <body>
 <div id="frame">
-	<div id="sidepanel">
+	<div id="sidepanel" [class.menu-open]="menuOpen">
 		<div id="profile">
 			<div class="wrap">								
 				<img id="profile-img" [src]="hirerLogo" class="online" alt="" />
@@ -27,7 +27,7 @@
 				<li *ngFor="let contact of contacts; let i = index" style="border-bottom: 1px solid lightblue;" class="contact" [class.active]="i === selectedIndex" (click)="selectContactById(contact.id)">
 					<div class="wrap">
 						<span class="contact-status" [class.online]="contact.apt2ActiveMessage"></span>
-						<p attr.data-letters="{{ contact | getContactName | getContactNameInitials }}" class="name"><img style="width: 20px; margin: 0px; transform: translate(10px, 0px);" [src]="contact.channel === 'Telegram' ? '../assets/img/icon/telegram-512x512.png' : '../assets/img/icon/whatsapp-512x512.png'" alt=""><div class="full-name">{{ contact | getContactName }}</div></p>
+						<p attr.data-letters="{{ contact | getContactName | getContactNameInitials }}" class="name"><img style="width: 20px; margin: 0px; transform: translate(10px, 0px);" [src]="contact.channel === 'Telegram' ? '../assets/img/icon/telegram-512x512.png' : '../assets/img/icon/whatsapp-512x512.png'" alt=""><div [style.display]="menuOpen ? 'inline' : 'none'" class="full-name">{{ contact | getContactName }}</div></p>
 						<div class="meta">							
 							<p class="preview">{{ contact.lastMessage }}</p>
 						</div>

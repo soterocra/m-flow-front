@@ -25,7 +25,7 @@ export class AppComponent {
       "id": "3a95ada53s127b62fb178",
       "userId": "56217251",
       "userName": "soterocra",
-      "name": "Rafael Sotero",
+      "name": "Rafael Sotero Rocha",
       "preferredName": "",
       "apt2ActiveMessage": true,
       "channel": "WhatsApp",
