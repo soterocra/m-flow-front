@@ -1,4 +1,3 @@
-
 <!DOCTYPE html><html class=''>
 <head>
 </head>
@@ -9,13 +8,6 @@
 			<div class="wrap">								
 				<img id="profile-img" [src]="hirerLogo" class="online" alt="" />
 				<p>{{ hirerName }}</p>
-				<div class="tray">
-					<div class="hamburger hamburger--arrowalt2 js-hamburger" [class.is-active]="menuOpen" (click)="menuOpen = !menuOpen">
-						<div class="hamburger-box">
-							<div class="hamburger-inner"></div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 		<div id="search">
@@ -28,7 +20,7 @@
 					<div class="wrap">
 						<span class="contact-status" [class.online]="contact.apt2ActiveMessage"></span>
 						<p attr.data-letters="{{ contact | getContactName | getContactNameInitials }}" class="name"><img style="width: 20px; margin: 0px; transform: translate(10px, 0px);" [src]="contact.channel === 'Telegram' ? '../assets/img/icon/telegram-512x512.png' : '../assets/img/icon/whatsapp-512x512.png'" alt=""><div [style.display]="menuOpen ? 'inline' : 'none'" class="full-name">{{ contact | getContactName }}</div></p>
-						<div class="meta">							
+						<div class="meta" *ngIf="menuOpen">							
 							<p class="preview">{{ contact.lastMessage }}</p>
 						</div>
 					</div>
@@ -36,27 +28,29 @@
 			</ul>
 		</div>
 		<div id="bottom-bar">
-			<button id="addcontact"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span>Sair</span></button>
+			<button id="addcontact" (click)="menuOpen = !menuOpen">
+				<i class="fa fa-users fa-fw" *ngIf="!menuOpen" aria-hidden="true"></i>
+				<i class="fa fa-compress fa-fw" *ngIf="menuOpen" aria-hidden="true"></i>
+				<span>Contatos</span></button>
 			<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Configurações</span></button>
 		</div>
 	</div>
-	<div class="content">
+	<div class="content" [hidden]="menuOpen">
 		<div class="contact-profile">
-			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+			<p attr.data-letters="{{ selectedContact | getContactName | getContactNameInitials }}" style="margin-left: 8px;">
 			<p>{{ selectedContact | getContactName }}</p>
 			<div class="social-media">
-				<i class="fa fa-facebook" aria-hidden="true"></i>
-				<i class="fa fa-twitter" aria-hidden="true"></i>
-				 <i class="fa fa-instagram" aria-hidden="true"></i>
+				<button type="button" class="btn btn-primary">Encerrar</button>
 			</div>
 		</div>
 		<div class="messages">
 			<ul>
 				<ng-container *ngFor="let m of message.messages">
 					<li [class.sent]="m.from === 'admin'" [class.replies]="m.from !== 'admin'">
-						<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+						<img *ngIf="m.from === 'admin'" [src]="hirerLogo"/>
+						<p *ngIf="m.from !== 'admin'" attr.data-letters="{{ selectedContact | getContactName | getContactNameInitials }}" style="border: 0; padding: 0; margin: 0px 12px 6px 8px; width: 22px;">
 						<p>{{ m.content }}</p>
-					</li>				
+					</li>
 				</ng-container>
 			</ul>
 		</div>

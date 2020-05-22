@@ -22,28 +22,6 @@ export class AppComponent {
 
   contacts = [
     {
-      "id": "3a95ada53s127b62fb178",
-      "userId": "56217251",
-      "userName": "soterocra",
-      "name": "Rafael Sotero Rocha",
-      "preferredName": "",
-      "apt2ActiveMessage": true,
-      "channel": "WhatsApp",
-      "lastMessage": "Olá, gostaria de verificar o status do meu pedido.",
-      "active": true,
-      "telephones": [
-        {
-          "id": "21dds87190981asd23",
-          "ddi": 55,
-          "ddd": 34,
-          "phone": "996480888",
-          "description": "Telefone capturado do whatsapp automaticamente",
-          "hot": true,
-          "active": true,
-        }
-      ]
-    },
-    {
       "id": "3a95ada53127b62fb178",
       "userId": "56217251",
       "userName": "soterocra",
@@ -175,6 +153,8 @@ export class AppComponent {
     if (!messagesFound) {
       this.message = {}
     }
+
+    this.menuOpen = false;
   }
 
   getContactNameInitials(contact) {
