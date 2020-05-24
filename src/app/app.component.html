@@ -17,8 +17,9 @@
 		<div id="contacts">
 			<ul>
 				<li *ngFor="let contact of contacts; let i = index" style="border-bottom: 1px solid lightblue;" class="contact" [class.active]="i === selectedIndex" (click)="selectContactById(contact.id)">
+					<span class="badge badge-primary badge-pill">{{ getContactNotifications(contact) }}</span>
 					<div class="wrap">
-						<span class="contact-status" [class.online]="contact.apt2ActiveMessage"></span>
+						<span class="contact-status" [class.online]="contact.apt2ActiveMessage"></span>						
 						<p attr.data-letters="{{ contact | getContactName | getContactNameInitials }}" class="name"><img style="width: 20px; margin: 0px; transform: translate(10px, 0px);" [src]="contact.channel === 'Telegram' ? '../assets/img/icon/telegram-512x512.png' : '../assets/img/icon/whatsapp-512x512.png'" alt=""><div [style.display]="menuOpen ? 'inline' : 'none'" class="full-name">{{ contact | getContactName }}</div></p>
 						<div class="meta" *ngIf="menuOpen">							
 							<p class="preview">{{ contact.lastMessage }}</p>
@@ -40,7 +41,9 @@
 			<p attr.data-letters="{{ selectedContact | getContactName | getContactNameInitials }}" style="margin-left: 8px;">
 			<p>{{ selectedContact | getContactName }}</p>
 			<div class="social-media">
-				<button type="button" class="btn btn-primary">Encerrar</button>
+				<span class="badge badge-danger" *ngIf="selectedContact.apt2ActiveMessage">Encerrar</span>
+				<span class="badge badge-light" *ngIf="!selectedContact.apt2ActiveMessage">Encerrada</span>
+				<!-- <button type="button" class="btn btn-primary">Encerrar</button> -->
 			</div>
 		</div>
 		<div class="messages">
@@ -56,7 +59,7 @@
 		</div>
 		<div class="message-input">
 			<div class="wrap">
-			<input type="text" placeholder="Escreva sua mensagem..." />
+			<input type="text" #messageBox placeholder="Escreva sua mensagem..." [disabled]="!selectedContact.apt2ActiveMessage"/>
 			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
 			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 			</div>

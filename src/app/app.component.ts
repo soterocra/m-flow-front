@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChild('messageBox') messageBox: ElementRef;
+
   title = 'mflow-chat';
 
   menuOpen = true;
@@ -128,7 +130,8 @@ export class AppComponent {
         {
           "from": "admin",
           "content": "Por falta de comunicação, encerro esse chat.",
-          "timestamp": 291381232
+          "timestamp": 291381232,
+          "read": false
         }
       ]
     }
@@ -155,10 +158,24 @@ export class AppComponent {
     }
 
     this.menuOpen = false;
+    this.messageBox.nativeElement.value = '';
   }
 
   getContactNameInitials(contact) {
     return contact.name;
+  }
+
+  getContactNotifications(contact) {
+    let contactMessages: any = this.messages.filter((message) => message.id === contact.id);
+    console.log(contactMessages);
+
+    let unreadCount = 0;
+    for (var i = 0; i < contactMessages.length; i++) {
+      unreadCount += contactMessages[i].messages.filter((message) => message.read === false).length;      
+    }
+
+    if (unreadCount > 0)
+      return unreadCount;      
   }
 
   toggleExpand() {

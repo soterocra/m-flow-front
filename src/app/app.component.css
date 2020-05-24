@@ -451,7 +451,7 @@ body {
   }
 }
 
-#frame #sidepanel #contacts ul li.contact .wrap span {
+#frame #sidepanel #contacts ul li.contact .wrap .contact-status {
   position: absolute;
   left: 0;
   margin: -2px 0 0 -2px;
