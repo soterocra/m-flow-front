@@ -1,0 +1,95 @@
+<body id="corpo">
+
+  <div class="container" style="width: 100%; max-width: 100%;">
+
+    <section class="content-center">
+
+      <div class="text-center">
+        <a href="https://crudtec.com.br/" target="_blank">
+          <img class="logo" src="assets/img/CrudLogo.png" alt="Logo da Crud">
+        </a>
+      </div>
+
+      <div class="login">
+        <h1>m-flow</h1>
+      </div>
+
+      <form action="/login" method="POST" id="form-login">
+
+        <div class="card card-1">
+          <img class="icon" src="assets/img/pessoa.png">
+          <input type="email" id="email" placeholder="E-mail" required>
+        </div>
+
+        <div class="card card-1">
+          <img class="icon" src="assets/img/cadeado.png">
+          <input type="password" id="password" placeholder="Password" required>
+        </div>
+
+        <div>
+          <input type="text">
+        </div>
+
+        <div>
+
+          <button id="btn-submit" [routerLink]="['/chat']">LOGIN</button >
+
+        </div>
+
+      </form>
+
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="autoria">
+      <p> &copy; 2020 copyright - made with 🤍 by crudtec</p>
+    </div>
+  </footer>
+
+
+  <script>
+    var urlImages =
+      "https://pixabay.com/api/?key=10742992-5207ea1f6c422dfb6515bb141&q=urban&image_type=all&lang=pt&orientation=horizontal&min_width=1920&min_height=1280&safesearch=true&per_page=20&pretty=true&colors=grayscale";
+
+    function getUrl(url) {
+      var request = new XMLHttpRequest();
+      request.open('GET', url, false); // `false` faz o request ser syncrono.
+      request.send(null);
+
+      if (request.status === 200) {
+        //console.log(request.responseText);
+      }
+      return request.responseText;
+    }
+
+    var resposta = getUrl(urlImages);
+    console.log("Resposta: " + resposta);
+
+    console.log("Resultado da resposta: ");
+    console.log(JSON.parse(resposta));
+
+    /*
+    for( var i = 0; i < resposta.hits.length; i++){
+
+        document.write(resposta.hits[i]);
+    }*/
+
+    var respostaTratada = JSON.parse(resposta);
+
+    for (var i = 0; i < respostaTratada.hits.length; i++) {
+
+      console.log(respostaTratada.hits[i].largeImageURL);
+    }
+
+    var imagemAleatoria = (Math.floor(Math.random() * 20));
+    console.log("O número da imagem é: " + imagemAleatoria);
+
+    var imagemDeFundo = respostaTratada.hits[imagemAleatoria].largeImageURL;
+
+    document.getElementById('corpo').setAttribute('style', 'background-image: url("#");'.replace('#', imagemDeFundo));
+
+  </script>
+
+</body>

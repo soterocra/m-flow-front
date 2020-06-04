@@ -1,0 +1,85 @@
+<!DOCTYPE html><html class=''>
+<head>
+</head>
+<body>
+<div id="frame">
+	<div id="sidepanel" [class.menu-open]="menuOpen">
+		<div id="profile">
+			<div class="wrap">								
+				<img id="profile-img" [src]="hirerLogo" class="online" alt="" />
+				<p>{{ hirerName }}</p>
+			</div>
+		</div>
+		<div id="search" (click)="search()">
+			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+			<input #filterInput type="text" placeholder="Procurar contatos..." [(ngModel)]="searchTerm" (ngModelChange)="search()"/>
+		</div>
+		<div id="contacts">
+			<ul>
+				<li *ngFor="let contact of contactsFiltered; let i = index" style="border-bottom: 1px solid lightblue;" class="contact" [class.active]="i === selectedIndex" (click)="selectContactById(contact.id)">
+					<div class="wrap">
+						<span class="contact-status" [class.online]="contact.apt2ActiveMessage"></span>
+						<p attr.data-letters="{{ contact | getContactName | getContactNameInitials }}" class="name"><img style="width: 20px; margin: 0px; transform: translate(10px, 0px);" [src]="contact.channel === 'Telegram' ? '../assets/img/icon/telegram-512x512.png' : '../assets/img/icon/whatsapp-512x512.png'" alt=""><div [style.display]="menuOpen || forceMenuOpenedStyle ? 'inline' : 'none'" class="full-name">{{ contact | getContactName }}</div></p>
+						<div class="meta" *ngIf="menuOpen || forceMenuOpenedStyle">							
+							<p class="preview">{{ contact.lastMessage }}</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div id="bottom-bar">
+			<button id="addcontact" (click)="menuOpen = !menuOpen">
+				<i class="fa fa-users fa-fw" *ngIf="!menuOpen" aria-hidden="true"></i>
+				<i class="fa fa-compress fa-fw" *ngIf="menuOpen" aria-hidden="true"></i>
+				<span>Contatos</span></button>
+			<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Configurações</span></button>
+		</div>
+	</div>
+	<div class="content" [hidden]="menuOpen">
+		<div class="contact-profile">
+			<p attr.data-letters="{{ selectedContact | getContactName | getContactNameInitials }}" style="margin-left: 8px;">
+			<p>{{ selectedContact | getContactName }}</p>
+			<div class="social-media">
+				<button type="button" class="btn btn-primary" (click)="isCloseConversationOpen = true">Encerrar</button>
+				<app-modal #closeConversationModal id="closeConversation"
+					[show-modal]="isCloseConversationOpen"
+					[title]="'Delete'"
+					>
+						<div class="modal-body">
+						<p>Encerrar a conversa com <strong>{{ selectedContact.name }}</strong> ?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" (click)="alerta()" aria-label="Close">
+									Encerrar
+							</button>
+							<button class="btn btn-secondary" aria-label="Close" (click)="isCloseConversationOpen = false">
+									Cancelar
+							</button>
+					</div>
+			</app-modal>
+			</div>
+		</div>
+		<div class="messages">
+			<ul>
+				<ng-container *ngFor="let m of message.messages">
+					<li [class.sent]="m.from === 'admin'" [class.replies]="m.from !== 'admin'">
+						<img *ngIf="m.from === 'admin'" [src]="hirerLogo"/>
+						<p *ngIf="m.from !== 'admin'" attr.data-letters="{{ selectedContact | getContactName | getContactNameInitials }}" style="border: 0; padding: 0; margin: 0px 12px 6px 8px; width: 22px;">
+						<p>{{ m.content }}</p>
+					</li>
+				</ng-container>
+			</ul>
+		</div>
+		<div class="message-input">
+			<div class="wrap">
+			<input type="text" placeholder="Escreva sua mensagem..." />
+			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+
+
+</html>
