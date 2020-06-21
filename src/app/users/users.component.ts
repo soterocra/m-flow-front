@@ -7,6 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
+  title: string = 'Mflow - Gerenciar usuários'
+
+  users = [
+    {
+      "name": "Maria",
+      "email": "sotero@crudtec.com.br",
+      "password": "123456",
+      "profile": "ADMINISTRATOR"
+    },
+    {
+      "name": "João",
+      "email": "sotero@crudtec.com.br",
+      "password": "123456",
+      "profile": "OPERATOR"
+    }
+  ]
+  
   constructor() { }
 
   ngOnInit(): void {
