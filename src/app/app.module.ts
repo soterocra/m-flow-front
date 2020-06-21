@@ -9,6 +9,8 @@ import { ModalComponent } from './modal/modal.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app.routing';
 import { ChatComponent } from './chat/chat.component';
+import { UsersComponent } from './users/users.component';
+import { TemplateMessageComponent } from './template-message/template-message.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { ChatComponent } from './chat/chat.component';
     InitialsNameTransformPipe,
     ModalComponent,
     LoginComponent,
-    ChatComponent
+    ChatComponent,
+    UsersComponent,
+    TemplateMessageComponent
   ],
   imports: [
     BrowserModule,

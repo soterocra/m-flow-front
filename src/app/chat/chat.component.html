@@ -19,8 +19,8 @@
 				<li *ngFor="let contact of contactsFiltered; let i = index" style="border-bottom: 1px solid lightblue;" class="contact" [class.active]="i === selectedIndex" (click)="selectContactById(contact.id)">
 					<div class="wrap">
 						<span class="contact-status" [class.online]="contact.apt2ActiveMessage"></span>
-						<p attr.data-letters="{{ contact | getContactName | getContactNameInitials }}" class="name"><img style="width: 20px; margin: 0px; transform: translate(10px, 0px);" [src]="contact.channel === 'Telegram' ? '../assets/img/icon/telegram-512x512.png' : '../assets/img/icon/whatsapp-512x512.png'" alt=""><div [style.display]="menuOpen || forceMenuOpenedStyle ? 'inline' : 'none'" class="full-name">{{ contact | getContactName }}</div></p>
-						<div class="meta" *ngIf="menuOpen || forceMenuOpenedStyle">							
+						<p attr.data-letters="{{ contact | getContactName | getContactNameInitials }}" class="name"><img style="width: 20px; margin: 0px; transform: translate(10px, 0px);" [src]="contact.channel === 'Telegram' ? '../assets/img/icon/telegram-512x512.png' : '../assets/img/icon/whatsapp-512x512.png'" alt=""><div [style.display]="menuOpen || !forceMenuOpenedStyle ? 'inline' : 'none'" class="full-name">{{ contact | getContactName }}</div></p>
+						<div class="meta" *ngIf="menuOpen">							
 							<p class="preview">{{ contact.lastMessage }}</p>
 						</div>
 					</div>
@@ -32,7 +32,29 @@
 				<i class="fa fa-users fa-fw" *ngIf="!menuOpen" aria-hidden="true"></i>
 				<i class="fa fa-compress fa-fw" *ngIf="menuOpen" aria-hidden="true"></i>
 				<span>Contatos</span></button>
-			<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Configurações</span></button>
+			<button id="settings" (click)="isConfigOpen = true"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Configurações</span></button>
+			<app-modal #closeConversationModal id="config"
+					[show-modal]="isConfigOpen"
+					[title]="'Painel'"
+					>
+						<div class="modal-body">
+						<p>Navegue entre as opções:</p>
+						<button type="button" class="btn btn-primary w-100 mb-2" (click)="alerta()" aria-label="Close">
+								Cadastro de usuário
+						</button>
+						<button type="button" class="btn btn-primary w-100 mb-2" (click)="alerta()" aria-label="Close">
+								Cadastro de mensagem
+						</button>
+						<button type="button" class="btn btn-darger w-100 mt-2 mb-2" style="background-color: red;" (click)="alerta()" aria-label="Close">
+							Sair
+						</button>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary w-100" aria-label="Close" (click)="isConfigOpen = false">
+									Cancelar
+							</button>
+					</div>
+			</app-modal>
 		</div>
 	</div>
 	<div class="content" [hidden]="menuOpen">

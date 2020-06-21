@@ -29,6 +29,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   contactsFiltered: any = [];
   
   isCloseConversationOpen = false;
+  isConfigOpen = false;
 
   constructor(public mediaMatcher: MediaMatcher) {}
 
@@ -44,6 +45,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   myListener(event) {
     console.log(event.matches);
+    console.log(this.menuOpen);
     this.forceMenuOpenedStyle = !event.matches;
     // console.log( ? 'match' : 'no match');
   }
@@ -192,7 +194,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   search(): void {
     this.menuOpen = true;
     this.filterInput.nativeElement.focus();
-    let term = this.searchTerm;
+    let term = this.searchTerm || "";
     this.contactsFiltered = this.contacts.filter(function(item) {
       return (item.name.toLowerCase().indexOf(term.toLowerCase()) >= 0 || 
               item.userId.toLowerCase().indexOf(term.toLowerCase()) >= 0 ||
@@ -203,6 +205,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   alerta() {
     alert('ação')
+  }
+
+  showNameAndLastMessage(): Boolean {
+    return this.menuOpen || this.forceMenuOpenedStyle;
   }
 
 }

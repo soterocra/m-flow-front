@@ -5,6 +5,7 @@ export class InitialsNameTransformPipe implements PipeTransform {
   
   transform(name: string) {
     const initials = () => {   
+      name = name || '';
       let nameList = name.split(' ');
       if (nameList.length > 1)
         return nameList[0].substring(0, 1) + nameList[1].substring(0, 1);
