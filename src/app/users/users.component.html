@@ -19,11 +19,33 @@
             <div class="row text-right">
               <div class="col-md-4 col-12"></div>
               <div class="col-md-4 col-12">
-                <a class="btn btn-success mt-1 w-100" (click)="isAddUserOpen = true"><i class="material-icons">&#xE147;</i> <span>Novo Usuário</span></a>
+                <a class="btn btn-success mt-1 w-100" (click)="isAddUserOpen = true"><i class="material-icons ml-1 mr-2">&#xE147;</i> <span>Novo Usuário</span></a>
               </div>
-              <!-- <div class="col-md-4 col-12">
-                <a class="btn btn-danger mt-1 w-100" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Deletar Selecionados</span></a>
-              </div> -->
+              <div class="col-md-4 col-12">
+                <a class="btn btn-secondary mt-1 w-100" (click)="isConfigOpen = true" data-toggle="modal"><i class="fa fa-cog fa-fw" aria-hidden="true"></i><span>Configurações</span></a>
+                <!-- <button id="settings" (click)="isConfigOpen = true"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Configurações</span></button> -->
+                <app-modal #closeConversationModal id="config"
+                    [show-modal]="isConfigOpen"
+                    [title]="'Painel'"
+                    >
+                      <div class="modal-body">
+                      <button type="button" class="btn btn-primary w-100 mb-2" [routerLink]="['/chat']" aria-label="Close">
+                          Chat
+                      </button>
+                      <button type="button" class="btn btn-primary w-100 mb-2" [routerLink]="['/template-message']" aria-label="Close">
+                          Cadastro de mensagem
+                      </button>
+                      <button type="button" class="btn btn-darger w-100 mt-2 mb-2" style="background-color: red;" (click)="alerta()" aria-label="Close">
+                        Sair
+                      </button>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary w-100" aria-label="Close" (click)="isConfigOpen = false">
+                            Cancelar
+                        </button>
+                    </div>
+                </app-modal>  
+              </div>
             </div>
           </div>
         </div>

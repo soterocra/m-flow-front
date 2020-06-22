@@ -1,1 +1,200 @@
-<p>template-message works!</p>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-md-8 col-12">
+            <h2>Gerenciar <b>Templates</b></h2>
+          </div>
+          <div class="col-md-4 col-12 text-center">
+            <div class="row text-right">
+              <div class="col-md-4 col-12"></div>
+              <div class="col-md-4 col-12">
+                <a class="btn btn-success mt-1 w-100" (click)="isAddTemplateOpen = true"><i class="material-icons ml-1 mr-2">&#xE147;</i> <span>Novo Template</span></a>
+              </div>
+              <div class="col-md-4 col-12">
+                <a class="btn btn-secondary mt-1 w-100" (click)="isConfigOpen = true" data-toggle="modal"><i class="fa fa-cog fa-fw" aria-hidden="true"></i><span>Configurações</span></a>
+                <!-- <button id="settings" (click)="isConfigOpen = true"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Configurações</span></button> -->
+                <app-modal #closeConversationModal id="config"
+                    [show-modal]="isConfigOpen"
+                    [title]="'Painel'"
+                    >
+                      <div class="modal-body">
+                      <button type="button" class="btn btn-primary w-100 mb-2" [routerLink]="['/chat']" aria-label="Close">
+                          Chat
+                      </button>
+                      <button type="button" class="btn btn-primary w-100 mb-2" [routerLink]="['/users']" aria-label="Close">
+                          Cadastro de usuário
+                      </button>
+                      <button type="button" class="btn btn-darger w-100 mt-2 mb-2" style="background-color: red;" (click)="alerta()" aria-label="Close">
+                        Sair
+                      </button>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary w-100" aria-label="Close" (click)="isConfigOpen = false">
+                            Cancelar
+                        </button>
+                    </div>
+                </app-modal>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <!-- <th>
+                <span class="custom-checkbox">
+                  <input type="checkbox" id="selectAll">
+                  <label for="selectAll"></label>
+                </span>
+              </th> -->
+              <th>Nome</th>
+              <th>Mensagem</th>              
+              <th>Ações</th>              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let template of templates; let i = index">
+              <!-- <td>
+                <span class="custom-checkbox">
+                  <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                  <label for="checkbox1"></label>
+                </span>
+              </td> -->
+              <td>{{ template.name }}</td>
+              <td>{{ template.message }}</td>
+              <td>
+                <a class="edit" (click)="update(template.id)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                <a class="delete" (click)="delete(template.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+              </td>
+            </tr>            
+          </tbody>
+        </table>
+      </div>
+      <!-- <div class="clearfix">
+        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+        <ul class="pagination">
+          <li class="page-item disabled"><a href="#"><</a></li>
+          <li class="page-item"><a href="#" class="page-link">1</a></li>
+          <li class="page-item"><a href="#" class="page-link">2</a></li>
+          <li class="page-item active"><a href="#" class="page-link">3</a></li>
+          <li class="page-item"><a href="#" class="page-link">4</a></li>
+          <li class="page-item"><a href="#" class="page-link">5</a></li>
+          <li class="page-item"><a href="#" class="page-link">></a></li>
+        </ul>
+      </div> -->
+    </div>
+  </div>
+  <!-- Add Modal HTML -->  
+  <app-modal #closeConversationModal id="addModal"
+      [show-modal]="isAddTemplateOpen"
+      [title]="'Adicionar novo template'"
+      >
+        <div class="modal-body">
+          <div class="row mt-2">
+            <div class="col-12">
+              <label for="addTemplateName">Nome</label>
+            </div>
+            <div class="col-12">
+              <input class="w-100" type="text" name="addTemplateName" id="addTemplateName" [(ngModel)]="templateToInsert.name">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <label for="addTemplateMessage">Mensagem</label>
+            </div>
+            <div class="col-12">
+              <input class="w-100" type="text" name="addTemplateMessage" id="addTemplateMessage" [(ngModel)]="templateToInsert.message">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary w-100 mb-2" (click)="save()" aria-label="Close">
+            Salvar
+          </button>
+          <button class="btn btn-secondary w-100" aria-label="Close" (click)="isAddTemplateOpen = false">
+            Cancelar
+          </button>
+      </div>
+  </app-modal>
+  <!-- Edit Modal HTML -->
+  <app-modal #closeConversationModal id="editModal"
+      [show-modal]="isEditTemplateOpen"
+      [title]="'Editar template'"
+      >
+        <div class="modal-body">
+          <div class="row mt-2">
+            <div class="col-12">
+              <label for="editTemplateName">Nome</label>
+            </div>
+            <div class="col-12">
+              <input class="w-100" type="text" name="editTemplateName" id="editTemplateName" [(ngModel)]="selectedTemplate.name">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <label for="editTemplateMessage">Mensagem</label>
+            </div>
+            <div class="col-12">
+              <input class="w-100" type="text" name="editTemplateMessage" id="editTemplateMessage" [(ngModel)]="selectedTemplate.message">
+            </div>
+          </div>          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary w-100 mb-2" (click)="update(selectedTemplate.id, true)" aria-label="Close">
+            Salvar
+          </button>
+          <button class="btn btn-secondary w-100" aria-label="Close" (click)="isEditTemplateOpen = false">
+            Cancelar
+          </button>
+      </div>
+  </app-modal>
+  <!-- Delete Modal HTML -->
+  <app-modal #closeConversationModal id="deleteModal"
+      [show-modal]="isDeleteTemplateOpen"
+      [title]="'Remover template'"
+      >
+        <div class="modal-body">
+          <p>Tem certeza que deseja remover o template?</p>
+          <p><strong>Essa ação não pode ser desfeita.</strong></p>        
+        </div>  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger w-100 mb-2" (click)="delete(selectedTemplate.id, true)" aria-label="Close">
+            Deletar
+          </button>
+          <button class="btn btn-secondary w-100" aria-label="Close" (click)="isDeleteTemplateOpen = false">
+            Cancelar
+          </button>
+      </div>
+  </app-modal>
+  <!-- Delete Selecteds Modal HTML -->
+  <app-modal #closeConversationModal id="deleteAllModal"
+      [show-modal]="isDeleteSelectedTemplateOpen"
+      [title]="'Remover templates'"
+      >
+        <div class="modal-body">
+          <p>Tem certeza que deseja remover <strong>TODOS</strong> os templates selecionados?</p>
+          <p><strong>Essa ação não pode ser desfeita.</strong></p>        
+        </div>  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger w-100 mb-2" (click)="alerta()" aria-label="Close">
+            Deletar
+          </button>
+          <button class="btn btn-secondary w-100" aria-label="Close" (click)="isDeleteTemplateOpen = false">
+            Cancelar
+          </button>
+      </div>
+  </app-modal>
+</body>

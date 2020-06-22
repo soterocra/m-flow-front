@@ -38,11 +38,10 @@
 					[title]="'Painel'"
 					>
 						<div class="modal-body">
-						<p>Navegue entre as opções:</p>
 						<button type="button" class="btn btn-primary w-100 mb-2" [routerLink]="['/users']" aria-label="Close">
 								Cadastro de usuário
 						</button>
-						<button type="button" class="btn btn-primary w-100 mb-2" (click)="alerta()" aria-label="Close">
+						<button type="button" class="btn btn-primary w-100 mb-2" [routerLink]="['/template-message']" aria-label="Close">
 								Cadastro de mensagem
 						</button>
 						<button type="button" class="btn btn-darger w-100 mt-2 mb-2" style="background-color: red;" (click)="alerta()" aria-label="Close">

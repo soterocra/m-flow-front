@@ -12,6 +12,7 @@ export class UsersComponent implements OnInit {
 
   title: string = 'Mflow - Gerenciar usuários'
 
+  isConfigOpen = false;
   isAddUserOpen = false;
   isEditUserOpen = false;
   isDeleteUserOpen = false;
