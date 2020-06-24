@@ -10,6 +10,7 @@ import { MessagesService } from './chat-messages.service';
 import { MessagesRoot } from './Messages';
 import { ReplyService } from './chat-reply.service';
 import { Reply } from './Reply';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-chat',
@@ -51,7 +52,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   writedMessage: string;
 
-  constructor(public mediaMatcher: MediaMatcher, public httpClient: HttpClient) {}
+  constructor(public mediaMatcher: MediaMatcher, public httpClient: HttpClient, public auth: AuthService) {}
 
   ngOnInit(): void {    
     this.matcher = this.mediaMatcher.matchMedia('(min-width: 735px)');

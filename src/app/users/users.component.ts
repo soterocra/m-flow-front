@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Users } from './Users';
 import { UsersService } from './users.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-users',
@@ -42,7 +43,7 @@ export class UsersComponent implements OnInit {
     // }
   ]
   
-  constructor(public httpClient: HttpClient) { }
+  constructor(public httpClient: HttpClient, public auth: AuthService) { }
 
   ngOnInit(): void {
     this.service = new UsersService(this.httpClient);

@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Template } from './Template';
 import { TemplateService } from './template.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-template-message',
@@ -42,7 +43,7 @@ export class TemplateMessageComponent implements OnInit {
     // }
   ]
   
-  constructor(public httpClient: HttpClient) { }
+  constructor(public httpClient: HttpClient, public auth: AuthService) { }
 
   ngOnInit(): void {
     this.service = new TemplateService(this.httpClient);
