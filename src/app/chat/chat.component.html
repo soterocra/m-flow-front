@@ -16,7 +16,7 @@
 		</div>
 		<div id="contacts">
 			<ul>
-				<li *ngFor="let contact of contactsFiltered; let i = index" style="border-bottom: 1px solid lightblue;" class="contact" [class.active]="i === selectedIndex" (click)="selectContactById(contact.id)">
+				<li *ngFor="let contact of contactsFiltered; let i = index" style="border-bottom: 1px solid lightblue;" class="contact" [class.active]="i === selectedIndex" (click)="selectContactById(contact.userId)">
 					<div class="wrap">
 						<span class="contact-status" [class.online]="contact.apt2ActiveMessage"></span>
 						<p attr.data-letters="{{ contact | getContactName | getContactNameInitials }}" class="name"><img style="width: 20px; margin: 0px; transform: translate(10px, 0px);" [src]="contact.channel === 'Telegram' ? '../assets/img/icon/telegram-512x512.png' : '../assets/img/icon/whatsapp-512x512.png'" alt=""><div [style.display]="menuOpen || !forceMenuOpenedStyle ? 'inline' : 'none'" class="full-name">{{ contact | getContactName }}</div></p>
@@ -61,7 +61,7 @@
 			<p attr.data-letters="{{ selectedContact | getContactName | getContactNameInitials }}" style="margin-left: 8px;">
 			<p>{{ selectedContact | getContactName }}</p>
 			<div class="social-media">
-				<button type="button" class="btn btn-primary" (click)="isCloseConversationOpen = true">Encerrar</button>
+				<!-- <button type="button" class="btn btn-primary" (click)="isCloseConversationOpen = true">Encerrar</button> -->
 				<app-modal #closeConversationModal id="closeConversation"
 					[show-modal]="isCloseConversationOpen"
 					[title]="'Delete'"
@@ -80,12 +80,12 @@
 			</app-modal>
 			</div>
 		</div>
-		<div class="messages">
+		<div #scrollMe class="messages">
 			<ul>
 				<ng-container *ngFor="let m of message.messages">
-					<li [class.sent]="m.from === 'admin'" [class.replies]="m.from !== 'admin'">
-						<img *ngIf="m.from === 'admin'" [src]="hirerLogo"/>
-						<p *ngIf="m.from !== 'admin'" attr.data-letters="{{ selectedContact | getContactName | getContactNameInitials }}" style="border: 0; padding: 0; margin: 0px 12px 6px 8px; width: 22px;">
+					<li [class.sent]="m.from_ === 'whatsapp:+553131810689'" [class.replies]="m.from_ !== 'whatsapp:+553131810689'">
+						<img *ngIf="m.from_ === 'whatsapp:+553131810689'" [src]="hirerLogo"/>
+						<p *ngIf="m.from_ !== 'whatsapp:+553131810689'" attr.data-letters="{{ selectedContact | getContactName | getContactNameInitials }}" style="border: 0; padding: 0; margin: 0px 12px 6px 8px; width: 22px;">
 						<p>{{ m.content }}</p>
 					</li>
 				</ng-container>
@@ -93,9 +93,9 @@
 		</div>
 		<div class="message-input">
 			<div class="wrap">
-			<input type="text" placeholder="Escreva sua mensagem..." />
-			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+			<input #writedMessageInput type="text" placeholder="Escreva sua mensagem..." [(ngModel)]="writedMessage" (keyup.enter)="reply()"/>
+			<!-- <i class="fa fa-paperclip attachment" aria-hidden="true"></i> -->
+			<button class="submit" (click)="reply()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 			</div>
 		</div>
 	</div>
