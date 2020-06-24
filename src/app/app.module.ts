@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NameTransformPipe } from './app.pipe';
@@ -12,6 +12,8 @@ import { ModalComponent } from './modal/modal.component';
 import { TemplateMessageComponent } from './template-message/template-message.component';
 import { UsersComponent } from './users/users.component';
 import { UsersService } from './users/users.service';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
 
 
 @NgModule({
@@ -29,9 +31,10 @@ import { UsersService } from './users/users.service';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [UsersService],
+  providers: [UsersService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

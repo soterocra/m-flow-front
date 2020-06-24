@@ -14,16 +14,16 @@
         <h1>m-flow</h1>
       </div>
 
-      <form action="/login" method="POST" id="form-login">
+      <form [formGroup]="form" (ngSubmit)="login()">
 
         <div class="card card-1">
           <img class="icon mb-2 pb-2" src="assets/img/pessoa.png">
-          <input type="email" id="email" placeholder="E-mail" required>
+          <input type="email" id="email" placeholder="E-mail" formControlName="email" required>
         </div>
 
         <div class="card card-1">
           <img class="icon mb-2 pb-2" src="assets/img/cadeado.png">
-          <input type="password" id="password" placeholder="Password" required>
+          <input type="password" id="password" placeholder="Password" formControlName="password" required>
         </div>
 
         <div>
@@ -32,7 +32,7 @@
 
         <div>
 
-          <button id="btn-submit" [routerLink]="['/chat']">LOGIN</button >
+          <button id="btn-submit">LOGIN</button >
 
         </div>
 
