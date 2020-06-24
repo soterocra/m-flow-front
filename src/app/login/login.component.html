@@ -18,12 +18,12 @@
 
         <div class="card card-1">
           <img class="icon mb-2 pb-2" src="assets/img/pessoa.png">
-          <input type="email" id="email" placeholder="E-mail" formControlName="email" required>
+          <input type="email" id="email" placeholder="E-mail" formControlName="email" [(ngModel)]="email" required>
         </div>
 
         <div class="card card-1">
           <img class="icon mb-2 pb-2" src="assets/img/cadeado.png">
-          <input type="password" id="password" placeholder="Password" formControlName="password" required>
+          <input type="password" id="password" placeholder="Password" formControlName="password" [(ngModel)]="password" required>
         </div>
 
         <div>
